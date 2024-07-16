@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
     [SerializeField] private float _speed; //number of steps per unitblock
     private readonly float _sizeField = 20;
     private List<ICharacterModule> _modules = new();
+    private bool _inArea;
 
     void Start()
     {
@@ -21,7 +22,7 @@ public class Character : MonoBehaviour
             if (Input.GetKey(KeyCode.S)) Move(Vector3.back);
             if (Input.GetKey(KeyCode.A)) Move(Vector3.left);
             if (Input.GetKey(KeyCode.D)) Move(Vector3.right);
-            if (Input.GetKeyDown(KeyCode.E)) Interact();
+            if (Input.GetKeyDown(KeyCode.E) && _inArea) Interact();
             yield return new WaitForSeconds(0.001f);
         }
     }
@@ -44,6 +45,22 @@ public class Character : MonoBehaviour
         foreach (var module in _modules)
         {
             module.UpdateModule();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Interact"))
+        {
+            _inArea = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Interact"))
+        {
+            _inArea = false;
         }
     }
 

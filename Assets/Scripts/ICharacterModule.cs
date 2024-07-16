@@ -1,5 +1,5 @@
 
 public interface ICharacterModule
 {
-    void UpdateModule();
+    public void UpdateModule();
 }
