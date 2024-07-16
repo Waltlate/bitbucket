@@ -1,9 +1,12 @@
+using TMPro;
 using UnityEngine;
 
 public class DamageModule : MonoBehaviour, ICharacterModule
 {
-    [SerializeField] private GameObject _hotKeyText;
     private Character _character;
+    [SerializeField] private GameObject _hotKeyText;
+    [SerializeField] private TextMeshProUGUI _messageText;
+    private readonly string _messageInteract = "Character took damage";
     private bool _inArea;
 
     public void Initialize(Character character)
@@ -16,7 +19,9 @@ public class DamageModule : MonoBehaviour, ICharacterModule
         // Логика для проверки возможности получения урона
         if (Input.GetKeyDown(KeyCode.E) && _inArea)
         {
-            Debug.Log("Character took damage"); // Логика для получения урона
+            _messageText.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+            _messageText.text = _messageInteract;
+            Debug.Log(_messageInteract); // Логика для получения урона
         }
     }
 
